@@ -1,0 +1,13 @@
+flask
+python-dotenv
+bootstrap-flask
+flask-wtf[email]
+flask-ckeditor
+flask-sqlalchemy
+flask-mailman
+flask-caching
+flask-assets
+# dev
+watchdog
+faker
+coverage
