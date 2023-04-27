@@ -8,13 +8,16 @@
 import click
 from flask import Flask
 
-app = Flask(__name__)
+app = Flask(__name__)  # 实例化Flask 这个类就得到了程序实例app
+
+app.config['ADMIN_NAME'] = 'Peter'
 
 
 # the minimal Flask application
 @app.route('/')
 def index():
-    return '<h1>Hello, World!</h1>'
+    return '<h1>Hello, World2222!</h1>'
+
 
 
 # bind multiple URL for one view function
@@ -33,6 +36,10 @@ def greet(name):
 
 # custom flask cli command
 @app.cli.command()
+def hello():
+    """Just say hello."""
+    click.echo('Hello, Human!')
+@app.cli.command('say_hello')
 def hello():
     """Just say hello."""
     click.echo('Hello, Human!')

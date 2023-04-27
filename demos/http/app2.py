@@ -5,13 +5,14 @@
     :copyright: © 2018 Grey Li
     :license: MIT, see LICENSE for more details.
 """
+from flask import json
 import os
 try:
     from urlparse import urlparse, urljoin
 except ImportError:
     from urllib.parse import urlparse, urljoin
 
-from jinja2 import escape
+# from jinja2 import escape
 from jinja2.utils import generate_lorem_ipsum
 from flask import Flask, make_response, request, redirect, url_for, abort, session, jsonify
 
@@ -26,19 +27,24 @@ def hello():
     name = request.args.get('name')
     if name is None:
         name = request.cookies.get('name', 'Human')
-    response = '<h1>Hello, %s!</h1>' % escape(name)  # escape name to avoid XSS
+    response = '<h1>Hello, %s!</h1>' % name  # escape name to avoid XSS
     # return different response according to the user's authentication status
+    print(session)
     if 'logged_in' in session:
         response += '[Authenticated]'
     else:
         response += '[Not Authenticated]'
     return response
 
+@app.before_request
+def before():
+    print("每次请求前都要执行")
 
 # redirect
 @app.route('/hi')
 def hi():
-    return redirect(url_for('hello'))
+    return redirect(url_for('hello'),code=301)
+
 
 
 # use int URL converter
@@ -50,8 +56,16 @@ def go_back(year):
 # use any URL converter
 @app.route('/colors/<any(blue, white, red):color>')
 def three_colors(color):
-    return '<p>Love is patient and kind. Love is not jealous or boastful or proud or rude.</p>'
 
+    return '<p>Love is patient and kind. Love is not jealous or boastful or proud or rude %s.</p>'%color
+
+colors=['red','blue','black']
+# str(colors)[1:-1] ==>'red','blue','black'
+print('/colorss/<any({}):color>'.format(str(colors)))
+@app.route('/colorss/<any({}):color>'.format(",".join(colors)))
+def three_colorss(color):
+    # print(1+"1")
+    return '<p>Love is patient and kind. Love is not jealous or boastful or proud or rude %s.</p>'%color
 
 # return error response
 @app.route('/brew/<drink>')
@@ -66,6 +80,7 @@ def teapot(drink):
 @app.route('/404')
 def not_found():
     abort(404)
+    print("abort")
 
 
 # return response with different formats
@@ -117,6 +132,7 @@ body: Don't forget the party!
         }
         }
         response = jsonify(body)
+        response = jsonify({'name': 'Grey Li', 'gender': 'male'})
         # equal to:
         # response = make_response(json.dumps(body))
         # response.mimetype = "application/json"
@@ -147,12 +163,20 @@ def admin():
         abort(403)
     return 'Welcome to admin page.'
 
+@app.route('/getenv')
+def getenv():
+    sk = os.getenv('SECRET_KEY', 'secret string')
+    print(sk)
+    response = make_response(sk)
+    return  response
+
 
 # log out user
 @app.route('/logout')
 def logout():
     if 'logged_in' in session:
         session.pop('logged_in')
+        # del session['logged_in']
     return redirect(url_for('hello'))
 
 
