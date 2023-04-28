@@ -36,4 +36,6 @@ HelloFlask 的 Meta 仓库，包含 HelloFlask 相关文档和示例程序。
 - 如果程序主模块是其他名称 比如hello.py那么需要设置环境变量FLASK_APP，将包含程序实例的模块名赋值给
 这个变量set FLASK_APP=hello
 - app.config['ADMIN_NAME'] = 'Peter' 配置的名称必须是全大写形式，小写的变量将不会被读取
+- url_for url_for()函数接收两个及以上的参数，他接收函数名作为第一个参数， 接收对应URL规则的命名参数，如果还出现其他的参数，则会添加到URL的后面作为查询参数
+- urlparse 将url解析为6部分：ParseResult(scheme='http', netloc='127.0.0.1:5000', path='/', params='', query='', fragment='')
 - 
