@@ -43,7 +43,7 @@ def before():
 # redirect
 @app.route('/hi')
 def hi():
-    return redirect(url_for('hello'),code=301)
+    return redirect(url_for('hellos'),code=301)
 
 
 
@@ -212,6 +212,7 @@ def load_post():
 # redirect to last page
 @app.route('/foo')
 def foo():
+    # print()
     return '<h1>Foo page</h1><a href="%s">Do something and redirect</a>' \
            % url_for('do_something', next=request.full_path)
 
@@ -229,13 +230,19 @@ def do_something():
 
 
 def is_safe_url(target):
+    print("host_url",request.host_url)
     ref_url = urlparse(request.host_url)
+    print("ref_url",ref_url)
     test_url = urlparse(urljoin(request.host_url, target))
+    print("ref_url.netloc====>",ref_url.netloc)
     return test_url.scheme in ('http', 'https') and \
            ref_url.netloc == test_url.netloc
 
 
 def redirect_back(default='hello', **kwargs):
+    print("aaaa===>",kwargs)
+    print("1=====>",request.args)
+    print("2=====>",request.referrer)
     for target in request.args.get('next'), request.referrer:
         if not target:
             continue
