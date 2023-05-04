@@ -8,10 +8,11 @@
 import os
 from flask import Flask, render_template, flash, redirect, url_for, Markup
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='static1')
 app.secret_key = os.getenv('SECRET_KEY', 'secret string')
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+# app.static_folder="static1"
 
 user = {
     'username': 'Grey Li',
@@ -49,16 +50,25 @@ def inject_info():
     return dict(foo=foo)  # equal to: return {'foo': foo}
 
 
+app.context_processor(inject_info)  # 和使用装饰器的效果一样
+app.context_processor(lambda: dict(foo="I am foos"))
+
+
 # register template global function
 @app.template_global()
 def bar():
     return 'I am bar.'
 
 
+# app.add_template_global(bar) 和使用装饰器的效果一样
+
 # register template filter
-@app.template_filter()
+# @app.template_filter()
 def musical(s):
     return s + Markup(' &#9835;')
+
+
+app.add_template_filter(musical,name='mu')  # 和使用装饰器@app.template_filter() 效果一样
 
 
 # register template test
@@ -78,6 +88,8 @@ def watchlist_with_static():
 @app.route('/flash')
 def just_flash():
     flash('I am flash, who is looking for me?')
+    # print(1+'2')
+    flash(u'我是闪电')
     return redirect(url_for('index'))
 
 

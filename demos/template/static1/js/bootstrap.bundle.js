@@ -2782,7 +2782,7 @@ function getOppositeVariation(variation) {
  * - `bottom` (on bottom, centered)
  * - `auto-right` (on the side with more space available, alignment depends by placement)
  *
- * @static
+ * @static1
  * @type {Array}
  * @enum {String}
  * @readonly
@@ -3615,7 +3615,7 @@ var modifiers = {
  * })
  * ```
  * @type {Object}
- * @static
+ * @static1
  * @memberof Popper
  */
 var Defaults = {
@@ -3792,7 +3792,7 @@ var Popper = function () {
      * and will be removed in v2! Use the PopperUtils module directly instead.
      * Due to the high instability of the methods contained in Utils, we can't
      * guarantee them to follow semver. Use them at your own risk!
-     * @static
+     * @static1
      * @private
      * @type {Object}
      * @deprecated since version 1.8
@@ -3879,7 +3879,7 @@ var Dropdown = function ($$$1) {
     DROPLEFT: 'dropleft',
     MENURIGHT: 'dropdown-menu-right',
     MENULEFT: 'dropdown-menu-left',
-    POSITION_STATIC: 'position-static'
+    POSITION_STATIC: 'position-static1'
   };
   var Selector = {
     DATA_TOGGLE: '[data-toggle="dropdown"]',
@@ -3973,7 +3973,7 @@ var Dropdown = function ($$$1) {
           if ($$$1(this._menu).hasClass(ClassName.MENULEFT) || $$$1(this._menu).hasClass(ClassName.MENURIGHT)) {
             element = parent;
           }
-        } // If boundary is not `scrollParent`, then set position to `static`
+        } // If boundary is not `scrollParent`, then set position to `static1`
         // to allow the menu to "escape" the scroll parent's boundaries
         // https://github.com/twbs/bootstrap/issues/24251
 
