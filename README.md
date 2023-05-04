@@ -37,5 +37,7 @@ HelloFlask 的 Meta 仓库，包含 HelloFlask 相关文档和示例程序。
 这个变量set FLASK_APP=hello
 - app.config['ADMIN_NAME'] = 'Peter' 配置的名称必须是全大写形式，小写的变量将不会被读取
 - url_for url_for()函数接收两个及以上的参数，他接收函数名作为第一个参数， 接收对应URL规则的命名参数，如果还出现其他的参数，则会添加到URL的后面作为查询参数
+- url_for('static1', filename='favicon.ico') 访问静态文件
 - urlparse 将url解析为6部分：ParseResult(scheme='http', netloc='127.0.0.1:5000', path='/', params='', query='', fragment='')
+- 当我们调用render_template（）函数渲染任意一个模板时，所有使用app.context_processor装饰器注册的模板上下文处理函数（包括Flask内置的上下文处理函数）都会被执行，这些函数的返回值会被添加到模板中，因此我们可以在模板中直接使用foo变量
 - 
